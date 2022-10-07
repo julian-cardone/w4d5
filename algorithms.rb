@@ -49,3 +49,42 @@ end
 # list = [5, 3, -7]
 # p subsum_1(list) # => 8
 
+def anagram_1?(str1,str2)
+    str1 = str1.split("")
+    perm_arr = str1.permutation.to_a
+    perm_arr.include?(str2.split(""))
+end
+
+# p anagram_1?("gizmo", "sally")    #=> false
+# p anagram_1?("elvis", "lives")    #=> true
+
+def anagram_2?(str1,str2)
+    str2 = str2.split("")
+    str1.each_char do |char|
+        idx = str2.find_index(char)
+        return false if idx.nil?
+        str2.delete_at(idx)
+    end
+    true if str2.length == 0
+end
+
+# p anagram_2?("gizmo", "sally")    #=> false
+# p anagram_2?("elvis", "lives")    #=> true
+
+def anagram_3?(str1,str2)
+    str1.split("").sort == str2.split("").sort
+end
+
+def anagram_4?(str,str2)
+    hash = Hash.new(0)
+    str.each_char do |char|
+        hash[char] += 1
+    end
+    str2.each_char do |char|
+        hash[char] -= 1
+    end
+    hash.values.none?{|n| n > 0}
+end
+
+p anagram_4?("gizmo", "sally")    #=> false
+p anagram_4?("elvis", "lives")    #=> true
